@@ -23,7 +23,7 @@ std::string get_endpoint_name(std::string name, VisionStreamType type){
 }
 
 std::string get_ipc_path(const std::string& name) {
-  std::string path = "/tmp/";
+  std::string path = "/dev/tmp/";
   if (char* prefix = std::getenv("OPENPILOT_PREFIX")) {
     path += std::string(prefix) + "_";
   }

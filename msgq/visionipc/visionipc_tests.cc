@@ -1,7 +1,7 @@
 #include <thread>
 #include <chrono>
 
-#include "catch2/catch.hpp"
+#include "catch2/catch_all.hpp"
 
 #include "msgq/visionipc/visionipc_server.h"
 #include "msgq/visionipc/visionipc_client.h"

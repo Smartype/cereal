@@ -1,4 +1,4 @@
-#include "catch2/catch.hpp"
+#include "catch2/catch_all.hpp"
 #include "msgq/msgq.h"
 
 TEST_CASE("ALIGN")

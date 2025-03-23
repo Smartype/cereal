@@ -8,6 +8,8 @@
 #include <sys/mman.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #ifdef __APPLE__
 #define getsocket() socket(AF_UNIX, SOCK_STREAM, 0)
@@ -53,6 +55,8 @@ int ipc_bind(const char* socket_path) {
   err = listen(sock, 3);
   assert(err == 0);
 
+  // allow apt ui to read write
+  chmod(addr.sun_path, 0777);
   return sock;
 }
 

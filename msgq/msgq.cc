@@ -133,6 +133,8 @@ int msgq_new_queue(msgq_queue_t * q, const char * path, size_t size){
   q->endpoint = path;
   q->read_conflate = false;
 
+  // allow apk ui to read write
+  chmod(full_path.c_str(), 0777);
   return 0;
 }
 

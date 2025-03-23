@@ -15,11 +15,14 @@ cpppath = [
   '#msgq/',
   '/usr/lib/include',
   '/opt/homebrew/include',
+  '/data/data/com.termux/files/usr/include',
   sysconfig.get_paths()['include'],
 ]
 
 libpath = [
   '/opt/homebrew/lib',
+  '/data/data/com.termux/files/usr/lib',
+  '/system_ext/lib64',
 ]
 
 AddOption('--minimal',

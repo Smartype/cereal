@@ -22,7 +22,7 @@ vipc_files = ['visionipc.cc', 'visionipc_server.cc', 'visionipc_client.cc', 'vis
 vipc_sources = [f'{visionipc_dir.abspath}/{f}' for f in vipc_files]
 
 if arch == "larch64":
-  vipc_sources += [f'{visionipc_dir.abspath}/visionbuf_ion.cc']
+  vipc_sources += [f'{visionipc_dir.abspath}/visionbuf_dma-buf.cc']
 else:
   vipc_sources += [f'{visionipc_dir.abspath}/visionbuf_cl.cc']
 
@@ -35,14 +35,17 @@ vipc_libs = envCython["LIBS"] + [visionipc, msgq, common, "zmq"]
 if arch == "Darwin":
   vipc_frameworks.append('OpenCL')
 else:
-  vipc_libs.append('OpenCL')
+  vipc_libs.append('OpenCL_system')
 envCython.Program(f'{visionipc_dir.abspath}/visionipc_pyx.so', f'{visionipc_dir.abspath}/visionipc_pyx.pyx',
                   LIBS=vipc_libs, FRAMEWORKS=vipc_frameworks)
 
+catch2_libs = ['Catch2', 'Catch2Main']
+android_libs = ['log']
+
 if GetOption('extras'):
-  env.Program('msgq/test_runner', ['msgq/test_runner.cc', 'msgq/msgq_tests.cc'], LIBS=[msgq, common])
+  env.Program('msgq/test_runner', ['msgq/test_runner.cc', 'msgq/msgq_tests.cc'], LIBS=[msgq, common] + catch2_libs + android_libs)
   env.Program(f'{visionipc_dir.abspath}/test_runner',
              [f'{visionipc_dir.abspath}/test_runner.cc', f'{visionipc_dir.abspath}/visionipc_tests.cc'],
-              LIBS=['pthread'] + vipc_libs, FRAMEWORKS=vipc_frameworks)
+              LIBS=['pthread'] + vipc_libs + catch2_libs + android_libs, FRAMEWORKS=vipc_frameworks)
 
 Export('visionipc', 'msgq', 'msgq_python')
